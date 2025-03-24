@@ -12,3 +12,44 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          String          @default(uuid())
+  email       String          
+  password    String
+  websites    Website[]
+}
+
+model Vaidator {
+    id          String          @default(uuid())
+    publicKey   String
+    location    String
+    ip          String
+    ticks       Website_ticks[]
+}
+
+model Website {
+    id          String          @default(uuid())
+    url         String
+    userId      String  
+    user        User            @relations(fields:[userId],references:[id])
+    ticks       Website_ticks[]
+}
+
+
+model Website_ticks {
+   id           String            @default(uuid()) 
+   websiteId    String
+   validatorId  String
+   createdAt    DateTime
+   status       WebsiteStatus
+   latency      Float
+   website      Website           @relations(fields:[websiteId],references:[id])
+   validator    Validator         @relations(fields:[VvlidatorId],references:[id])
+
+}
+
+enum WebsiteStatus {
+  Good
+  Bad
+}
