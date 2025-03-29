@@ -46,7 +46,6 @@ model Website_ticks {
    latency      Float
    website      Website           @relation(fields:[websiteId],references:[id])
    validator    Validator         @relation(fields:[validatorId],references:[id])
-
 }
 
 enum WebsiteStatus {
